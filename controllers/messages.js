@@ -17,13 +17,15 @@ const postMessage = asyncWrapper( async ( req, res ) => {
       return res.status(400).json( { message: 'Prompt is required' } )
     }
 
-    const response = await openai.completions.create( {
-      model: 'gpt-4',
-      prompt,
-      max_tokens: 200,
+    const { choices } = await openai.chat.completions.create( {
+      model: 'gpt-4o-mini',
+      messages: [
+          { role: 'user', content: message },
+      ],
+      store: true,
     } )
 
-    res.json( { text: response.choices[0]?.text.trim() || 'No response' } )
+    res.json( { response: choices[0].message.content } )
   } catch (error) {
     console.error(`Failed to generate response: ${error}`)
     res.status(500).json( { message: 'Server error: Failed to generate response' } )
