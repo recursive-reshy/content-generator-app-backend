@@ -17,7 +17,7 @@ const uploadFile = asyncWrapper( async ( req, res ) => {
 
     console.log( { uploadedFile } )
 
-    const storageReference = ref( storage, `pdfs/${ new Date().getTime() }_${ uploadedFile.originalname }` )
+    const storageReference = ref( storage, `${ process.env.UPLOAD_PATH }/${ new Date().getTime() }_${ uploadedFile.originalname }` )
 
     const metadata = {
       contentType: uploadedFile.mimetype
