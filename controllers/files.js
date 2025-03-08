@@ -2,20 +2,20 @@ import asyncWrapper from '../middleware/asyncWrapper.js'
 
 // Firebase
 import firebase from '../firebase.js'
-import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
+import { getStorage, ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
 
 
 const storage = getStorage(firebase)
 
 const uploadFile = asyncWrapper( async ( req, res ) => {
   try {
+    console.log({req})
+    
     if( !req.file ) {
       return res.status(400).send('No file uploaded.')
     }
 
     const uploadedFile = req.file
-
-    console.log( { uploadedFile } )
 
     const storageReference = ref( storage, `${ process.env.UPLOAD_PATH }/${ new Date().getTime() }_${ uploadedFile.originalname }` )
 

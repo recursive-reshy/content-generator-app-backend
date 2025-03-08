@@ -10,6 +10,6 @@ const router = express.Router()
 
 const upload = multer( { storage: multer.memoryStorage() } )
 
-router.route('/').post( upload.single('file'), uploadFile )
+router.route('/').post( upload.single('files'), uploadFile )
 
 export default router
