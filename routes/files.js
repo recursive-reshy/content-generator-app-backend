@@ -4,12 +4,14 @@ import express from 'express'
 import multer from 'multer'
 
 // Controllerss
-import { uploadFile } from '../controllers/files.js'
+import { uploadFile, getFiles, deleteFile } from '../controllers/files.js'
 
 const router = express.Router()
 
 const upload = multer( { storage: multer.memoryStorage() } )
 
-router.route('/').post( upload.single('files'), uploadFile )
+router.route('/').get( getFiles ).post( upload.single('files'), uploadFile )
+
+router.route('/:fileName').delete( deleteFile )
 
 export default router
